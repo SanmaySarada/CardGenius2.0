@@ -18,6 +18,7 @@ enum MockData {
             cardType: .charge,
             cardStyle: .gold,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-1", name: "Dining", multiplier: 4.0, description: "4x points on dining"),
                 RewardCategory(id: "cat-2", name: "Travel", multiplier: 3.0, description: "3x points on travel")
@@ -38,6 +39,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .blue,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-3", name: "Travel", multiplier: 3.0, description: "3x points on travel and dining"),
                 RewardCategory(id: "cat-4", name: "Dining", multiplier: 3.0, description: "3x points on dining")
@@ -58,6 +60,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .gradient,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-5", name: "Groceries", multiplier: 3.0, description: "3% cash back on groceries"),
                 RewardCategory(id: "cat-6", name: "Gas", multiplier: 2.0, description: "2% cash back on gas")
@@ -78,6 +81,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .platinum,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-7", name: "All Purchases", multiplier: 2.0, description: "2% cash back on all purchases")
             ],

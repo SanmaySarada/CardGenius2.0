@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A00001 /* CardGeniusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00001 /* CardGeniusApp.swift */; };
+		A0RSRC1 /* card_rewards_matrix_temp2.csv in Resources */ = {isa = PBXBuildFile; fileRef = B0RSRC1 /* card_rewards_matrix_temp2.csv */; };
+		A0RSRC2 /* card_images in Resources */ = {isa = PBXBuildFile; fileRef = B0RSRC2 /* card_images */; };
 		A00002 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00002 /* BottomSheet.swift */; };
 		A00003 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00003 /* ButtonStyles.swift */; };
 		A00004 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00004 /* CardView.swift */; };
@@ -51,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		B00001 /* CardGeniusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGeniusApp.swift; sourceTree = "<group>"; };
+		B0RSRC1 /* card_rewards_matrix_temp2.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = card_rewards_matrix_temp2.csv; sourceTree = "<group>"; };
+		B0RSRC2 /* card_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = card_images; sourceTree = "<group>"; };
 		B00002 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		B00003 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		B00004 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 		ROOT_GROUP = {
 			isa = PBXGroup;
 			children = (
+				B0RSRC1 /* card_rewards_matrix_temp2.csv */,
+				B0RSRC2 /* card_images */,
 				B00001 /* CardGeniusApp.swift */,
 				CORE_GROUP /* Core */,
 				FEATURES_GROUP /* Features */,
@@ -337,6 +343,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0RSRC1 /* card_rewards_matrix_temp2.csv in Resources */,
+				A0RSRC2 /* card_images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

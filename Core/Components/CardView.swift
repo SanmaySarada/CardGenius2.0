@@ -16,46 +16,41 @@ struct CardView: View {
     
     var body: some View {
         ZStack {
-            // Base Card with Gradient
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(card.cardStyle.gradient)
-                .frame(height: 220)
-            
-            // Glass overlay layer
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(.ultraThinMaterial)
-                .opacity(0.3)
-            
-            // Animated shimmer effect
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(0),
-                            Color.white.opacity(0.3),
-                            Color.white.opacity(0)
-                        ],
-                        startPoint: .leading,
-                        endPoint: .trailing
+            // Base Card: Real card image or gradient fallback
+            if let imageName = card.imageName, !imageName.isEmpty,
+               let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 220)
+                    .clipped()
+            } else {
+                // Debug: show we're in fallback
+                RoundedRectangle(cornerRadius: Radius.card)
+                    .fill(card.cardStyle.gradient)
+                    .frame(height: 220)
+                    .overlay(
+                        Text("No image: \(card.imageName ?? "nil")")
+                            .font(.caption)
+                            .foregroundColor(.white)
                     )
-                )
-                .offset(x: shimmerOffset)
-                .mask(RoundedRectangle(cornerRadius: Radius.card))
+            }
             
-            // Subtle inner glow
+            // Subtle border glow only
             RoundedRectangle(cornerRadius: Radius.card)
                 .strokeBorder(
                     LinearGradient(
                         colors: [
-                            Color.white.opacity(0.6),
-                            Color.white.opacity(0.2),
+                            Color.white.opacity(0.3),
                             Color.white.opacity(0.1),
-                            Color.white.opacity(0.3)
+                            Color.clear,
+                            Color.white.opacity(0.15)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
-                    lineWidth: 1.5
+                    lineWidth: 1
                 )
             
             // Card Content with glass background
@@ -141,16 +136,12 @@ struct CardView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(height: 220)
+        .cornerRadius(Radius.card)
         .shadow(color: Color.cgAccent.opacity(0.2), radius: 20, x: 0, y: 10)
         .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
         .scaleEffect(scale)
         .offset(y: offset)
         .opacity(isTopCard ? 1.0 : 0.7)
-        .onAppear {
-            withAnimation(.linear(duration: 2).repeatForever(autoreverses: false)) {
-                shimmerOffset = 400
-            }
-        }
     }
 }
 
