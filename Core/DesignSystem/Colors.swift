@@ -2,7 +2,7 @@
 //  Colors.swift
 //  CardGenius
 //
-//  Design System - Colors
+//  Design System - Colors with Liquid Glass Effects
 //
 
 import SwiftUI
@@ -10,15 +10,49 @@ import SwiftUI
 extension Color {
     // MARK: - Background Colors
     static var cgBackground: Color {
-        Color(light: .white, dark: Color(red: 0.05, green: 0.05, blue: 0.05))
+        Color(light: Color(red: 0.97, green: 0.97, blue: 0.99), dark: Color(red: 0.02, green: 0.02, blue: 0.04))
     }
     
     static var cgSecondaryBackground: Color {
-        Color(light: Color(red: 0.98, green: 0.98, blue: 0.98), dark: Color(red: 0.1, green: 0.1, blue: 0.1))
+        Color(light: Color(red: 0.94, green: 0.95, blue: 0.98), dark: Color(red: 0.05, green: 0.05, blue: 0.08))
     }
     
     static var cgTertiaryBackground: Color {
-        Color(light: Color(red: 0.95, green: 0.95, blue: 0.95), dark: Color(red: 0.15, green: 0.15, blue: 0.15))
+        Color(light: Color(red: 0.90, green: 0.92, blue: 0.96), dark: Color(red: 0.08, green: 0.08, blue: 0.12))
+    }
+    
+    // MARK: - Glass Effects
+    static var cgGlassLight: Color {
+        Color.white.opacity(0.15)
+    }
+    
+    static var cgGlassMedium: Color {
+        Color.white.opacity(0.25)
+    }
+    
+    static var cgGlassHeavy: Color {
+        Color.white.opacity(0.4)
+    }
+    
+    static var cgGlassDark: Color {
+        Color.black.opacity(0.15)
+    }
+    
+    // MARK: - Gradient Colors
+    static var cgGradientStart: Color {
+        Color(light: Color(red: 0.4, green: 0.6, blue: 1.0), dark: Color(red: 0.2, green: 0.4, blue: 0.9))
+    }
+    
+    static var cgGradientEnd: Color {
+        Color(light: Color(red: 0.7, green: 0.3, blue: 1.0), dark: Color(red: 0.5, green: 0.2, blue: 0.9))
+    }
+    
+    static var cgAccentGradientStart: Color {
+        Color(light: Color(red: 0.0, green: 0.7, blue: 0.9), dark: Color(red: 0.0, green: 0.6, blue: 0.8))
+    }
+    
+    static var cgAccentGradientEnd: Color {
+        Color(light: Color(red: 0.3, green: 0.9, blue: 0.7), dark: Color(red: 0.2, green: 0.8, blue: 0.6))
     }
     
     // MARK: - Primary Colors
