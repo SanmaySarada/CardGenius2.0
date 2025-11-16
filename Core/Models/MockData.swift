@@ -214,28 +214,32 @@ enum MockData {
                 cardId: "card-1",
                 cardName: "Amex Gold",
                 points: 5200,
-                tagline: "Most used at Restaurants"
+                tagline: "Most used at Restaurants",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-2",
                 cardId: "card-2",
                 cardName: "Chase Sapphire Reserve",
                 points: 3800,
-                tagline: "Best for Travel"
+                tagline: "Best for Travel",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-3",
                 cardId: "card-3",
                 cardName: "BofA Customized Cash",
                 points: 2500,
-                tagline: "Top Groceries Card"
+                tagline: "Top Groceries Card",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-4",
                 cardId: "card-4",
                 cardName: "Citi Double Cash",
                 points: 950,
-                tagline: "General Purpose"
+                tagline: "General Purpose",
+                imageName: nil
             )
         ],
         optimizations: [

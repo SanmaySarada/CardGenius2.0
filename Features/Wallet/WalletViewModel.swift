@@ -12,6 +12,7 @@ struct CardSuggestion {
     let cardName: String
     let merchantName: String
     let rewardText: String
+    let cardImageName: String?
 }
 
 @MainActor
@@ -61,7 +62,8 @@ class WalletViewModel: ObservableObject {
                 cardId: recommendedCard.id,
                 cardName: recommendedCard.displayName,
                 merchantName: merchant.name,
-                rewardText: rewardText
+                rewardText: rewardText,
+                cardImageName: recommendedCard.imageName
             )
         } catch {
             currentSuggestion = nil
@@ -77,6 +79,14 @@ class WalletViewModel: ObservableObject {
         } catch {
             print("Error updating card: \(error)")
         }
+    }
+    
+    func moveCardToTop(_ cardId: String) {
+        guard let index = cards.firstIndex(where: { $0.id == cardId }),
+              index > 0 else { return }
+        
+        let card = cards.remove(at: index)
+        cards.insert(card, at: 0)
     }
 }
 

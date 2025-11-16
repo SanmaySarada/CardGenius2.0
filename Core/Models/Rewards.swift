@@ -42,6 +42,7 @@ struct CardRewardContribution: Identifiable, Codable {
     let cardName: String
     let points: Int
     let tagline: String? // e.g., "Most used at Restaurants"
+    let imageName: String? // Card image from card_images folder
 }
 
 struct OptimizationWin: Identifiable, Codable {

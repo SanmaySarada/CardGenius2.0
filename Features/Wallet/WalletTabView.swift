@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct WalletTabView: View {
     @EnvironmentObject var serviceContainer: ServiceContainer
@@ -38,6 +39,7 @@ struct WalletTabView: View {
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
+                .zIndex(0)
                 
                 if viewModel.isLoading {
                     VStack(spacing: Spacing.l) {
@@ -46,6 +48,7 @@ struct WalletTabView: View {
                         }
                     }
                     .padding()
+                    .zIndex(1)
                 } else if viewModel.cards.isEmpty {
                     EmptyStateView(
                         icon: "creditcard",
@@ -54,7 +57,9 @@ struct WalletTabView: View {
                         actionTitle: "Add Card",
                         action: { showingAddCard = true }
                     )
+                    .zIndex(1)
                 } else {
+                    // Main content
                     ScrollView {
                         VStack(spacing: Spacing.m) {
                             // Smart Suggestion Banner
@@ -70,9 +75,9 @@ struct WalletTabView: View {
                                 .padding(.top, Spacing.m)
                             }
                             
-                            // Card Stack
+                            // Card Stack (z-index handled internally)
                             CardStackView(
-                                cards: viewModel.cards,
+                                cards: $viewModel.cards,
                                 onCardTap: { card in
                                     selectedCard = card
                                     showingCardDetail = true
@@ -81,6 +86,7 @@ struct WalletTabView: View {
                             .padding(.vertical, Spacing.l)
                         }
                     }
+                    .zIndex(1)
                 }
             }
             .navigationTitle("Wallet")
@@ -137,36 +143,62 @@ struct SmartSuggestionBanner: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: Spacing.m) {
-                ZStack {
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .frame(width: 44, height: 44)
-                    
-                    Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [
-                                    Color.cgAccentGradientStart.opacity(0.3),
-                                    Color.cgAccentGradientEnd.opacity(0.3)
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
+                // Card Image or fallback icon
+                if let imageName = suggestion.cardImageName, !imageName.isEmpty,
+                   let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 56, height: 36)
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .strokeBorder(
+                                    LinearGradient(
+                                        colors: [
+                                            Color.cgAccentGradientStart.opacity(0.6),
+                                            Color.cgAccentGradientEnd.opacity(0.6)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2
+                                )
                         )
-                        .frame(width: 44, height: 44)
-                    
-                    Image(systemName: "sparkles")
-                        .font(.title3)
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.yellow, .orange, .pink],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+                        .shadow(color: Color.cgAccent.opacity(0.4), radius: 12)
+                } else {
+                    // Fallback to sparkles icon
+                    ZStack {
+                        Circle()
+                            .fill(.ultraThinMaterial)
+                            .frame(width: 44, height: 44)
+                        
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color.cgAccentGradientStart.opacity(0.3),
+                                        Color.cgAccentGradientEnd.opacity(0.3)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                        )
-                        .rotationEffect(.degrees(isAnimating ? 360 : 0))
+                            .frame(width: 44, height: 44)
+                        
+                        Image(systemName: "sparkles")
+                            .font(.title3)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.yellow, .orange, .pink],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .rotationEffect(.degrees(isAnimating ? 360 : 0))
+                    }
+                    .shadow(color: Color.yellow.opacity(0.4), radius: 12)
                 }
-                .shadow(color: Color.yellow.opacity(0.4), radius: 12)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("You're at \(suggestion.merchantName)")
@@ -205,45 +237,122 @@ struct SmartSuggestionBanner: View {
 }
 
 struct CardStackView: View {
-    let cards: [Card]
+    @Binding var cards: [Card]
     let onCardTap: (Card) -> Void
-    @State private var scrollOffset: CGFloat = 0
+    
+    @State private var draggedCardId: String?
+    @State private var dragOffset: CGSize = .zero
+    @State private var dragScale: CGFloat = 1.0
+    @State private var lastTopCardMovedTime: Date? = nil
+    
+    private let cardHeight: CGFloat = 220
+    private let cardSpacing: CGFloat = 25
+    private let cardOverlap: CGFloat = 140
+    private let tapCooldown: TimeInterval = 1.0 // 1 second cooldown
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: -120) {
+        VStack(spacing: -cardOverlap) {
                 ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
+                    let isDragging = draggedCardId == card.id
+                    let isTopCard = index == 0 && !isDragging
+                    
                     CardView(
                         card: card,
-                        isTopCard: index == 0,
-                        offset: CGFloat(index) * 20,
-                        scale: max(0.85, 1.0 - CGFloat(index) * 0.1)
+                        isTopCard: isTopCard,
+                        offset: isDragging ? 0 : CGFloat(index) * cardSpacing,
+                        scale: isDragging ? dragScale : max(0.88, 1.0 - CGFloat(index) * 0.08)
                     )
                     .padding(.horizontal, Spacing.l)
-                    .padding(.top, CGFloat(index) * 20)
-                    .zIndex(Double(cards.count - index))
+                    .padding(.top, isDragging ? 0 : CGFloat(index) * cardSpacing)
+                    .zIndex(isDragging ? 10000 : Double(cards.count - index))
+                    .offset(y: isDragging ? dragOffset.height : 0)
+                    .gesture(
+                        DragGesture(minimumDistance: 10)
+                            .onChanged { value in
+                                if draggedCardId == nil {
+                                    withAnimation(.interactiveSpring(response: 0.35, dampingFraction: 0.75)) {
+                                        draggedCardId = card.id
+                                        dragScale = 1.08
+                                    }
+                                }
+                                
+                                if draggedCardId == card.id {
+                                    withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.9)) {
+                                        dragOffset = value.translation
+                                    }
+                                }
+                            }
+                            .onEnded { value in
+                                if let draggedId = draggedCardId, draggedId == card.id {
+                                    let dragThreshold: CGFloat = -80
+                                    
+                                    if value.translation.height < dragThreshold {
+                                        // Move card to top with smooth animation
+                                        withAnimation(.spring(response: 0.6, dampingFraction: 0.78)) {
+                                            if let index = cards.firstIndex(where: { $0.id == draggedId }),
+                                               index > 0 {
+                                                let card = cards.remove(at: index)
+                                                cards.insert(card, at: 0)
+                                                // Record the time when card moved to top
+                                                lastTopCardMovedTime = Date()
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Reset drag state with smooth animation
+                                    withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                                        dragOffset = .zero
+                                        dragScale = 1.0
+                                    }
+                                    
+                                    // Clear dragged card after animation completes
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        draggedCardId = nil
+                                    }
+                                }
+                            }
+                    )
                     .onTapGesture {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            onCardTap(card)
+                        if draggedCardId == nil {
+                            // Check if this card is already at the top
+                            if index == 0 {
+                                // Card is at the top - check cooldown before opening
+                                let now = Date()
+                                if let lastMoved = lastTopCardMovedTime {
+                                    let timeSinceMove = now.timeIntervalSince(lastMoved)
+                                    if timeSinceMove >= tapCooldown {
+                                        // Cooldown has passed - open card detail
+                                        onCardTap(card)
+                                    }
+                                } else {
+                                    // No recent move - open card detail
+                                    onCardTap(card)
+                                }
+                            } else {
+                                // Card is not at top - move it to top
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
+                                    if let tappedIndex = cards.firstIndex(where: { $0.id == card.id }) {
+                                        let tappedCard = cards.remove(at: tappedIndex)
+                                        cards.insert(tappedCard, at: 0)
+                                        // Record the time when card moved to top
+                                        lastTopCardMovedTime = Date()
+                                    }
+                                }
+                            }
                         }
                     }
-                    .contextMenu {
-                        Button(action: {}) {
-                            Label("Set as default backup card", systemImage: "star.fill")
-                        }
-                        
-                        Button(action: {}) {
-                            Label("Hide from wallet", systemImage: "eye.slash")
-                        }
-                        
-                        Button(action: { onCardTap(card) }) {
-                            Label("View details", systemImage: "info.circle")
+                    .onLongPressGesture(minimumDuration: 0.5) {
+                        // Long press opens card detail view
+                        if draggedCardId == nil {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                onCardTap(card)
+                            }
                         }
                     }
                 }
             }
-            .padding(.vertical, Spacing.xl)
-        }
+            .padding(.top, Spacing.xl)
+            .padding(.bottom, Spacing.xxl + cardHeight) // Extra padding to see bottom of last card
     }
 }
 
