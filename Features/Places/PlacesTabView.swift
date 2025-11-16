@@ -34,13 +34,31 @@ struct PlacesTabView: View {
                             selectedMerchant = merchant
                             viewModel.selectMerchant(merchant)
                         }) {
-                            Image(systemName: merchant.category.iconName)
-                                .font(.title3)
-                                .foregroundColor(.white)
-                                .padding(Spacing.s)
-                                .background(Color.cgPrimary)
-                                .clipShape(Circle())
-                                .cgSubtleShadow()
+                            ZStack {
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                    .frame(width: 44, height: 44)
+                                
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [Color.cgAccentGradientStart.opacity(0.8), Color.cgAccentGradientEnd.opacity(0.8)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 44, height: 44)
+                                
+                                Circle()
+                                    .strokeBorder(Color.white.opacity(0.5), lineWidth: 2)
+                                    .frame(width: 44, height: 44)
+                                
+                                Image(systemName: merchant.category.iconName)
+                                    .font(.title3)
+                                    .foregroundColor(.white)
+                                    .fontWeight(.semibold)
+                            }
+                            .shadow(color: Color.cgAccent.opacity(0.4), radius: 12)
                         }
                     }
                 }

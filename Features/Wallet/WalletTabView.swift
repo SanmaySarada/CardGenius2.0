@@ -27,7 +27,17 @@ struct WalletTabView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.cgBackground.ignoresSafeArea()
+                // Animated gradient background
+                LinearGradient(
+                    colors: [
+                        Color.cgBackground,
+                        Color.cgSecondaryBackground,
+                        Color.cgTertiaryBackground
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
                 
                 if viewModel.isLoading {
                     VStack(spacing: Spacing.l) {
@@ -122,20 +132,50 @@ struct WalletTabView: View {
 struct SmartSuggestionBanner: View {
     let suggestion: CardSuggestion
     let onTap: () -> Void
+    @State private var isAnimating = false
     
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: Spacing.m) {
-                Image(systemName: "sparkles")
-                    .foregroundColor(.cgAccent)
+                ZStack {
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .frame(width: 44, height: 44)
+                    
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.cgAccentGradientStart.opacity(0.3),
+                                    Color.cgAccentGradientEnd.opacity(0.3)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 44, height: 44)
+                    
+                    Image(systemName: "sparkles")
+                        .font(.title3)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.yellow, .orange, .pink],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .rotationEffect(.degrees(isAnimating ? 360 : 0))
+                }
+                .shadow(color: Color.yellow.opacity(0.4), radius: 12)
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("You're at \(suggestion.merchantName)")
-                        .font(.cgSubheadline(13))
+                        .font(.cgSubheadline(14))
+                        .fontWeight(.semibold)
                         .foregroundColor(.cgPrimaryText)
                     
                     Text("Use \(suggestion.cardName) for \(suggestion.rewardText)")
-                        .font(.cgCaption(11))
+                        .font(.cgCaption(12))
                         .foregroundColor(.cgSecondaryText)
                 }
                 
@@ -143,19 +183,24 @@ struct SmartSuggestionBanner: View {
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
-                    .foregroundColor(.cgSecondaryText)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.cgAccentGradientStart, Color.cgAccentGradientEnd],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
             }
             .padding(Spacing.m)
-            .background(
-                RoundedRectangle(cornerRadius: Radius.medium)
-                    .fill(Color.cgAccent.opacity(0.1))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Radius.medium)
-                            .stroke(Color.cgAccent.opacity(0.3), lineWidth: 1)
-                    )
-            )
+            .liquidGlassCard(cornerRadius: Radius.large)
         }
         .buttonStyle(.plain)
+        .onAppear {
+            withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                isAnimating = true
+            }
+        }
     }
 }
 

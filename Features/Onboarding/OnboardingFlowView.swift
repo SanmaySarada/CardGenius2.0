@@ -56,58 +56,96 @@ struct WelcomeView: View {
     @State private var showPrivacyInfo = false
     
     var body: some View {
-        VStack(spacing: Spacing.xl) {
-            Spacer()
+        ZStack {
+            // Animated gradient background
+            LinearGradient(
+                colors: [
+                    Color.cgGradientStart.opacity(0.1),
+                    Color.cgGradientEnd.opacity(0.15),
+                    Color.cgAccentGradientStart.opacity(0.1)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
             
-            // Animated Card Stack
-            ZStack {
-                ForEach(0..<3) { index in
-                    RoundedRectangle(cornerRadius: Radius.card)
-                        .fill(
+            VStack(spacing: Spacing.xl) {
+                Spacer()
+                
+                // Enhanced Animated Card Stack with Glass Effect
+                ZStack {
+                    ForEach(0..<3) { index in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: Radius.card)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.cgGradientStart, Color.cgGradientEnd, Color.cgAccentGradientStart],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                            
+                            RoundedRectangle(cornerRadius: Radius.card)
+                                .fill(.ultraThinMaterial)
+                                .opacity(0.3)
+                            
+                            RoundedRectangle(cornerRadius: Radius.card)
+                                .strokeBorder(
+                                    LinearGradient(
+                                        colors: [.white.opacity(0.6), .white.opacity(0.1)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 1.5
+                                )
+                        }
+                        .frame(width: 300, height: 190)
+                        .offset(x: CGFloat(index) * 12, y: CGFloat(index) * 12)
+                        .rotationEffect(.degrees(Double(index) * 4))
+                        .opacity(1.0 - Double(index) * 0.15)
+                        .shadow(color: Color.cgAccent.opacity(0.3 - Double(index) * 0.1), radius: 20, x: 0, y: 10)
+                    }
+                }
+                .padding(.bottom, Spacing.xxl)
+                .animation(.spring(response: 0.6, dampingFraction: 0.7), value: showPrivacyInfo)
+                
+                VStack(spacing: Spacing.m) {
+                    Text("Welcome to CardGenius")
+                        .font(.cgTitle(38))
+                        .fontWeight(.bold)
+                        .foregroundStyle(
                             LinearGradient(
-                                colors: [Color.cgPrimary, Color.cgAccent],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+                                colors: [Color.cgGradientStart, Color.cgGradientEnd],
+                                startPoint: .leading,
+                                endPoint: .trailing
                             )
                         )
-                        .frame(width: 280, height: 180)
-                        .offset(x: CGFloat(index) * 8, y: CGFloat(index) * 8)
-                        .rotationEffect(.degrees(Double(index) * 5))
-                        .opacity(1.0 - Double(index) * 0.2)
+                    
+                    Text("A smarter wallet that routes your cards for maximum rewards.")
+                        .font(.cgBody(18))
+                        .foregroundColor(.cgSecondaryText)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, Spacing.xl)
                 }
-            }
-            .padding(.bottom, Spacing.xxl)
-            .animation(.spring(response: 0.6, dampingFraction: 0.7), value: showPrivacyInfo)
-            
-            VStack(spacing: Spacing.m) {
-                Text("Welcome to CardGenius")
-                    .font(.cgTitle(34))
-                    .foregroundColor(.cgPrimaryText)
                 
-                Text("A smarter wallet that routes your cards for maximum rewards.")
-                    .font(.cgBody(17))
-                    .foregroundColor(.cgSecondaryText)
-                    .multilineTextAlignment(.center)
+                Spacer()
+                
+                VStack(spacing: Spacing.m) {
+                    Button(action: onNext) {
+                        Text("Get Started")
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
                     .padding(.horizontal, Spacing.xl)
-            }
-            
-            Spacer()
-            
-            VStack(spacing: Spacing.m) {
-                Button(action: onNext) {
-                    Text("Get Started")
+                    
+                    Button(action: { showPrivacyInfo = true }) {
+                        Text("Learn More")
+                            .font(.cgBody(17))
+                            .foregroundColor(.cgPrimary)
+                    }
+                    .padding(.horizontal, Spacing.xl)
                 }
-                .buttonStyle(PrimaryButtonStyle())
-                .padding(.horizontal, Spacing.xl)
-                
-                Button(action: { showPrivacyInfo = true }) {
-                    Text("Learn More")
-                        .font(.cgBody(17))
-                        .foregroundColor(.cgPrimary)
-                }
-                .padding(.horizontal, Spacing.xl)
+                .padding(.bottom, Spacing.xxl)
             }
-            .padding(.bottom, Spacing.xxl)
         }
         .sheet(isPresented: $showPrivacyInfo) {
             PrivacyInfoView()
