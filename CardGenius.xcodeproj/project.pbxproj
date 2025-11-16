@@ -1,0 +1,596 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00001 /* CardGeniusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00001 /* CardGeniusApp.swift */; };
+		A00002 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00002 /* BottomSheet.swift */; };
+		A00003 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00003 /* ButtonStyles.swift */; };
+		A00004 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00004 /* CardView.swift */; };
+		A00005 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00005 /* EmptyStateView.swift */; };
+		A00006 /* SkeletonLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00006 /* SkeletonLoader.swift */; };
+		A00007 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00007 /* Colors.swift */; };
+		A00008 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00008 /* Shadows.swift */; };
+		A00009 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00009 /* Spacing.swift */; };
+		A00010 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00010 /* Typography.swift */; };
+		A00011 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00011 /* Card.swift */; };
+		A00012 /* Institution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00012 /* Institution.swift */; };
+		A00013 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00013 /* Merchant.swift */; };
+		A00014 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00014 /* MockData.swift */; };
+		A00015 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00015 /* Recommendation.swift */; };
+		A00016 /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00016 /* Rewards.swift */; };
+		A00017 /* MockCardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00017 /* MockCardService.swift */; };
+		A00018 /* MockInstitutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00018 /* MockInstitutionService.swift */; };
+		A00019 /* MockMerchantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00019 /* MockMerchantService.swift */; };
+		A00020 /* MockRecommendationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00020 /* MockRecommendationService.swift */; };
+		A00021 /* MockRewardsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00021 /* MockRewardsService.swift */; };
+		A00022 /* CardServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00022 /* CardServiceProtocol.swift */; };
+		A00023 /* InstitutionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00023 /* InstitutionServiceProtocol.swift */; };
+		A00024 /* MerchantServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00024 /* MerchantServiceProtocol.swift */; };
+		A00025 /* RecommendationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00025 /* RecommendationServiceProtocol.swift */; };
+		A00026 /* RewardsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00026 /* RewardsServiceProtocol.swift */; };
+		A00027 /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00027 /* ServiceContainer.swift */; };
+		A00028 /* InsightsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00028 /* InsightsTabView.swift */; };
+		A00029 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00029 /* InsightsViewModel.swift */; };
+		A00030 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00030 /* MainTabView.swift */; };
+		A00031 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00031 /* OnboardingFlowView.swift */; };
+		A00032 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00032 /* OnboardingViewModel.swift */; };
+		A00033 /* PlacesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00033 /* PlacesTabView.swift */; };
+		A00034 /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00034 /* PlacesViewModel.swift */; };
+		A00035 /* RewardsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00035 /* RewardsTabView.swift */; };
+		A00036 /* RewardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00036 /* RewardsViewModel.swift */; };
+		A00037 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00037 /* SettingsView.swift */; };
+		A00038 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00038 /* CardDetailView.swift */; };
+		A00039 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00039 /* WalletTabView.swift */; };
+		A00040 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00040 /* WalletViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B00001 /* CardGeniusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGeniusApp.swift; sourceTree = "<group>"; };
+		B00002 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
+		B00003 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		B00004 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B00005 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		B00006 /* SkeletonLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoader.swift; sourceTree = "<group>"; };
+		B00007 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		B00008 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
+		B00009 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		B00010 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		B00011 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B00012 /* Institution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Institution.swift; sourceTree = "<group>"; };
+		B00013 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
+		B00014 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		B00015 /* Recommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
+		B00016 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
+		B00017 /* MockCardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardService.swift; sourceTree = "<group>"; };
+		B00018 /* MockInstitutionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInstitutionService.swift; sourceTree = "<group>"; };
+		B00019 /* MockMerchantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMerchantService.swift; sourceTree = "<group>"; };
+		B00020 /* MockRecommendationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecommendationService.swift; sourceTree = "<group>"; };
+		B00021 /* MockRewardsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRewardsService.swift; sourceTree = "<group>"; };
+		B00022 /* CardServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardServiceProtocol.swift; sourceTree = "<group>"; };
+		B00023 /* InstitutionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionServiceProtocol.swift; sourceTree = "<group>"; };
+		B00024 /* MerchantServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantServiceProtocol.swift; sourceTree = "<group>"; };
+		B00025 /* RecommendationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationServiceProtocol.swift; sourceTree = "<group>"; };
+		B00026 /* RewardsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsServiceProtocol.swift; sourceTree = "<group>"; };
+		B00027 /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		B00028 /* InsightsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTabView.swift; sourceTree = "<group>"; };
+		B00029 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
+		B00030 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		B00031 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
+		B00032 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		B00033 /* PlacesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTabView.swift; sourceTree = "<group>"; };
+		B00034 /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
+		B00035 /* RewardsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsTabView.swift; sourceTree = "<group>"; };
+		B00036 /* RewardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewModel.swift; sourceTree = "<group>"; };
+		B00037 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B00038 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		B00039 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
+		B00040 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
+		PRODUCT_REF /* CardGenius.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGenius.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FRAMEWORKS_PHASE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ROOT_GROUP = {
+			isa = PBXGroup;
+			children = (
+				B00001 /* CardGeniusApp.swift */,
+				CORE_GROUP /* Core */,
+				FEATURES_GROUP /* Features */,
+				PRODUCTS_GROUP /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		PRODUCTS_GROUP /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				PRODUCT_REF /* CardGenius.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CORE_GROUP /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				COMPONENTS_GROUP /* Components */,
+				DESIGN_GROUP /* DesignSystem */,
+				MODELS_GROUP /* Models */,
+				SERVICES_GROUP /* Services */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		COMPONENTS_GROUP /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B00002 /* BottomSheet.swift */,
+				B00003 /* ButtonStyles.swift */,
+				B00004 /* CardView.swift */,
+				B00005 /* EmptyStateView.swift */,
+				B00006 /* SkeletonLoader.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		DESIGN_GROUP /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				B00007 /* Colors.swift */,
+				B00008 /* Shadows.swift */,
+				B00009 /* Spacing.swift */,
+				B00010 /* Typography.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		MODELS_GROUP /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B00011 /* Card.swift */,
+				B00012 /* Institution.swift */,
+				B00013 /* Merchant.swift */,
+				B00014 /* MockData.swift */,
+				B00015 /* Recommendation.swift */,
+				B00016 /* Rewards.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		SERVICES_GROUP /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				MOCKS_GROUP /* Mocks */,
+				PROTOCOLS_GROUP /* Protocols */,
+				B00027 /* ServiceContainer.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		MOCKS_GROUP /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B00017 /* MockCardService.swift */,
+				B00018 /* MockInstitutionService.swift */,
+				B00019 /* MockMerchantService.swift */,
+				B00020 /* MockRecommendationService.swift */,
+				B00021 /* MockRewardsService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		PROTOCOLS_GROUP /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B00022 /* CardServiceProtocol.swift */,
+				B00023 /* InstitutionServiceProtocol.swift */,
+				B00024 /* MerchantServiceProtocol.swift */,
+				B00025 /* RecommendationServiceProtocol.swift */,
+				B00026 /* RewardsServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		FEATURES_GROUP /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				INSIGHTS_GROUP /* Insights */,
+				MAINTAB_GROUP /* MainTab */,
+				ONBOARDING_GROUP /* Onboarding */,
+				PLACES_GROUP /* Places */,
+				REWARDS_GROUP /* Rewards */,
+				SETTINGS_GROUP /* Settings */,
+				WALLET_GROUP /* Wallet */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		INSIGHTS_GROUP /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				B00028 /* InsightsTabView.swift */,
+				B00029 /* InsightsViewModel.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		MAINTAB_GROUP /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				B00030 /* MainTabView.swift */,
+			);
+			path = MainTab;
+			sourceTree = "<group>";
+		};
+		ONBOARDING_GROUP /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				B00031 /* OnboardingFlowView.swift */,
+				B00032 /* OnboardingViewModel.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		PLACES_GROUP /* Places */ = {
+			isa = PBXGroup;
+			children = (
+				B00033 /* PlacesTabView.swift */,
+				B00034 /* PlacesViewModel.swift */,
+			);
+			path = Places;
+			sourceTree = "<group>";
+		};
+		REWARDS_GROUP /* Rewards */ = {
+			isa = PBXGroup;
+			children = (
+				B00035 /* RewardsTabView.swift */,
+				B00036 /* RewardsViewModel.swift */,
+			);
+			path = Rewards;
+			sourceTree = "<group>";
+		};
+		SETTINGS_GROUP /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B00037 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		WALLET_GROUP /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				B00038 /* CardDetailView.swift */,
+				B00039 /* WalletTabView.swift */,
+				B00040 /* WalletViewModel.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TARGET_MAIN /* CardGenius */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CONFIG_LIST_TARGET /* Build configuration list for PBXNativeTarget "CardGenius" */;
+			buildPhases = (
+				SOURCES_PHASE /* Sources */,
+				FRAMEWORKS_PHASE /* Frameworks */,
+				RESOURCES_PHASE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardGenius;
+			productName = CardGenius;
+			productReference = PRODUCT_REF /* CardGenius.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PROJECT_MAIN /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					TARGET_MAIN = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = CONFIG_LIST_PROJECT /* Build configuration list for PBXProject "CardGenius" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ROOT_GROUP;
+			productRefGroup = PRODUCTS_GROUP /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				TARGET_MAIN /* CardGenius */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		RESOURCES_PHASE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		SOURCES_PHASE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00001 /* CardGeniusApp.swift in Sources */,
+				A00002 /* BottomSheet.swift in Sources */,
+				A00003 /* ButtonStyles.swift in Sources */,
+				A00004 /* CardView.swift in Sources */,
+				A00005 /* EmptyStateView.swift in Sources */,
+				A00006 /* SkeletonLoader.swift in Sources */,
+				A00007 /* Colors.swift in Sources */,
+				A00008 /* Shadows.swift in Sources */,
+				A00009 /* Spacing.swift in Sources */,
+				A00010 /* Typography.swift in Sources */,
+				A00011 /* Card.swift in Sources */,
+				A00012 /* Institution.swift in Sources */,
+				A00013 /* Merchant.swift in Sources */,
+				A00014 /* MockData.swift in Sources */,
+				A00015 /* Recommendation.swift in Sources */,
+				A00016 /* Rewards.swift in Sources */,
+				A00017 /* MockCardService.swift in Sources */,
+				A00018 /* MockInstitutionService.swift in Sources */,
+				A00019 /* MockMerchantService.swift in Sources */,
+				A00020 /* MockRecommendationService.swift in Sources */,
+				A00021 /* MockRewardsService.swift in Sources */,
+				A00022 /* CardServiceProtocol.swift in Sources */,
+				A00023 /* InstitutionServiceProtocol.swift in Sources */,
+				A00024 /* MerchantServiceProtocol.swift in Sources */,
+				A00025 /* RecommendationServiceProtocol.swift in Sources */,
+				A00026 /* RewardsServiceProtocol.swift in Sources */,
+				A00027 /* ServiceContainer.swift in Sources */,
+				A00028 /* InsightsTabView.swift in Sources */,
+				A00029 /* InsightsViewModel.swift in Sources */,
+				A00030 /* MainTabView.swift in Sources */,
+				A00031 /* OnboardingFlowView.swift in Sources */,
+				A00032 /* OnboardingViewModel.swift in Sources */,
+				A00033 /* PlacesTabView.swift in Sources */,
+				A00034 /* PlacesViewModel.swift in Sources */,
+				A00035 /* RewardsTabView.swift in Sources */,
+				A00036 /* RewardsViewModel.swift in Sources */,
+				A00037 /* SettingsView.swift in Sources */,
+				A00038 /* CardDetailView.swift in Sources */,
+				A00039 /* WalletTabView.swift in Sources */,
+				A00040 /* WalletViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DEBUG_CONFIG_PROJECT /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		RELEASE_CONFIG_PROJECT /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DEBUG_CONFIG_TARGET /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cardgenius.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		RELEASE_CONFIG_TARGET /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cardgenius.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CONFIG_LIST_PROJECT /* Build configuration list for PBXProject "CardGenius" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEBUG_CONFIG_PROJECT /* Debug */,
+				RELEASE_CONFIG_PROJECT /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CONFIG_LIST_TARGET /* Build configuration list for PBXNativeTarget "CardGenius" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEBUG_CONFIG_TARGET /* Debug */,
+				RELEASE_CONFIG_TARGET /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PROJECT_MAIN /* Project object */;
+}
+

@@ -468,7 +468,7 @@ struct SyncCardsView: View {
     
     var body: some View {
         VStack(spacing: Spacing.xl) {
-            Spacing.xxl
+            Spacer().frame(height: Spacing.xxl)
             
             if isSyncing {
                 VStack(spacing: Spacing.l) {
