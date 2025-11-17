@@ -17,6 +17,8 @@ struct Card: Identifiable, Codable, Hashable {
     let cardType: CardType
     let cardStyle: CardStyle
     let status: CardStatus
+    // Optional asset name bundled with the app (e.g., from card_images/)
+    let imageName: String?
     let rewardCategories: [RewardCategory]
     let creditLimit: Double?
     let currentBalance: Double?

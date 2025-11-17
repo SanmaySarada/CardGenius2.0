@@ -18,6 +18,7 @@ enum MockData {
             cardType: .charge,
             cardStyle: .gold,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-1", name: "Dining", multiplier: 4.0, description: "4x points on dining"),
                 RewardCategory(id: "cat-2", name: "Travel", multiplier: 3.0, description: "3x points on travel")
@@ -38,6 +39,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .blue,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-3", name: "Travel", multiplier: 3.0, description: "3x points on travel and dining"),
                 RewardCategory(id: "cat-4", name: "Dining", multiplier: 3.0, description: "3x points on dining")
@@ -58,6 +60,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .gradient,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-5", name: "Groceries", multiplier: 3.0, description: "3% cash back on groceries"),
                 RewardCategory(id: "cat-6", name: "Gas", multiplier: 2.0, description: "2% cash back on gas")
@@ -78,6 +81,7 @@ enum MockData {
             cardType: .credit,
             cardStyle: .platinum,
             status: .active,
+            imageName: nil,
             rewardCategories: [
                 RewardCategory(id: "cat-7", name: "All Purchases", multiplier: 2.0, description: "2% cash back on all purchases")
             ],
@@ -210,28 +214,32 @@ enum MockData {
                 cardId: "card-1",
                 cardName: "Amex Gold",
                 points: 5200,
-                tagline: "Most used at Restaurants"
+                tagline: "Most used at Restaurants",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-2",
                 cardId: "card-2",
                 cardName: "Chase Sapphire Reserve",
                 points: 3800,
-                tagline: "Best for Travel"
+                tagline: "Best for Travel",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-3",
                 cardId: "card-3",
                 cardName: "BofA Customized Cash",
                 points: 2500,
-                tagline: "Top Groceries Card"
+                tagline: "Top Groceries Card",
+                imageName: nil
             ),
             CardRewardContribution(
                 id: "contrib-4",
                 cardId: "card-4",
                 cardName: "Citi Double Cash",
                 points: 950,
-                tagline: "General Purpose"
+                tagline: "General Purpose",
+                imageName: nil
             )
         ],
         optimizations: [

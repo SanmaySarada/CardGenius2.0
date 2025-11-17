@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import Charts
 
 struct RewardsTabView: View {
@@ -289,32 +290,48 @@ struct CardContributionsView: View {
             
             ForEach(contributions) { contribution in
                 HStack(spacing: Spacing.m) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: Radius.small)
-                            .fill(.ultraThinMaterial)
-                            .frame(width: 48, height: 36)
-                        
-                        RoundedRectangle(cornerRadius: Radius.small)
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color.cgPrimary.opacity(0.3), Color.cgPrimary.opacity(0.1)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
+                    // Card Image or generic icon
+                    if let imageName = contribution.imageName, !imageName.isEmpty,
+                       let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 56, height: 36)
+                            .cornerRadius(Radius.small)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Radius.small)
+                                    .strokeBorder(Color.white.opacity(0.3), lineWidth: 0.5)
                             )
-                            .frame(width: 48, height: 36)
-                        
-                        Image(systemName: "creditcard.fill")
-                            .font(.caption)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [Color.cgPrimary, Color.cgAccent],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
+                            .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+                    } else {
+                        // Fallback generic icon
+                        ZStack {
+                            RoundedRectangle(cornerRadius: Radius.small)
+                                .fill(.ultraThinMaterial)
+                                .frame(width: 56, height: 36)
+                            
+                            RoundedRectangle(cornerRadius: Radius.small)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.cgPrimary.opacity(0.3), Color.cgPrimary.opacity(0.1)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
                                 )
-                            )
+                                .frame(width: 56, height: 36)
+                            
+                            Image(systemName: "creditcard.fill")
+                                .font(.caption)
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [Color.cgPrimary, Color.cgAccent],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                        }
+                        .shadow(color: Color.cgPrimary.opacity(0.2), radius: 4)
                     }
-                    .shadow(color: Color.cgPrimary.opacity(0.2), radius: 4)
                     
                     VStack(alignment: .leading, spacing: 4) {
                         Text(contribution.cardName)

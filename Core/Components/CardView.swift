@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+import CoreImage
 
 struct CardView: View {
     let card: Card
@@ -13,72 +15,57 @@ struct CardView: View {
     let offset: CGFloat
     let scale: CGFloat
     @State private var shimmerOffset: CGFloat = -200
+    @State private var isLightCard: Bool = false
+    
+    // Determine if card is light (needs black text)
+    private func checkIfLightCard() {
+        if let imageName = card.imageName, !imageName.isEmpty,
+           let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+            // Check image brightness
+            isLightCard = uiImage.averageBrightness > 0.6
+        } else {
+            // Check gradient/card style - platinum and gold are light
+            isLightCard = card.cardStyle == .platinum || card.cardStyle == .gold
+        }
+    }
     
     var body: some View {
         ZStack {
-            // Base Card with Gradient
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(card.cardStyle.gradient)
-                .frame(height: 220)
+            // Base Card Background: Real card image or gradient fallback
+            if let imageName = card.imageName, !imageName.isEmpty,
+               let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 220)
+                    .clipped()
+            } else {
+                // Clean gradient background when no image
+                RoundedRectangle(cornerRadius: Radius.card)
+                    .fill(card.cardStyle.gradient)
+                    .frame(height: 220)
+            }
             
-            // Glass overlay layer
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(.ultraThinMaterial)
-                .opacity(0.3)
-            
-            // Animated shimmer effect
-            RoundedRectangle(cornerRadius: Radius.card)
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(0),
-                            Color.white.opacity(0.3),
-                            Color.white.opacity(0)
-                        ],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .offset(x: shimmerOffset)
-                .mask(RoundedRectangle(cornerRadius: Radius.card))
-            
-            // Subtle inner glow
+            // Subtle border glow
             RoundedRectangle(cornerRadius: Radius.card)
                 .strokeBorder(
                     LinearGradient(
                         colors: [
-                            Color.white.opacity(0.6),
-                            Color.white.opacity(0.2),
+                            Color.white.opacity(0.3),
                             Color.white.opacity(0.1),
-                            Color.white.opacity(0.3)
+                            Color.clear,
+                            Color.white.opacity(0.15)
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
-                    lineWidth: 1.5
+                    lineWidth: 1
                 )
             
-            // Card Content with glass background
+            // Card Content - always displayed on top
             VStack(alignment: .leading, spacing: Spacing.m) {
                 HStack {
-                    // Network Icon with glow
-                    ZStack {
-                        Circle()
-                            .fill(.ultraThinMaterial)
-                            .frame(width: 44, height: 44)
-                        
-                        Image(systemName: card.network.iconName)
-                            .font(.title2)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.white, .white.opacity(0.8)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                    }
-                    .shadow(color: .white.opacity(0.3), radius: 8)
-                    
                     Spacer()
                     
                     // Enhanced Status Pill
@@ -91,6 +78,12 @@ struct CardView: View {
                 Text(card.maskedNumber)
                     .font(.cgTitle(26, weight: .bold))
                     .foregroundStyle(
+                        isLightCard ?
+                        LinearGradient(
+                            colors: [.black, .black.opacity(0.8)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ) :
                         LinearGradient(
                             colors: [.white, .white.opacity(0.9)],
                             startPoint: .leading,
@@ -98,15 +91,15 @@ struct CardView: View {
                         )
                     )
                     .tracking(6)
-                    .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                    .shadow(color: isLightCard ? .white.opacity(0.3) : .black.opacity(0.3), radius: 4, x: 0, y: 2)
                 
                 // Card Name with glass background
                 VStack(alignment: .leading, spacing: Spacing.xs) {
                     Text(card.displayName)
                         .font(.cgHeadline(18))
-                        .foregroundColor(.white)
+                        .foregroundColor(isLightCard ? .black : .white)
                         .fontWeight(.semibold)
-                        .shadow(color: .black.opacity(0.2), radius: 2)
+                        .shadow(color: isLightCard ? .white.opacity(0.3) : .black.opacity(0.2), radius: 2)
                     
                     if let topCategory = card.rewardCategories.first {
                         HStack(spacing: Spacing.s) {
@@ -123,7 +116,7 @@ struct CardView: View {
                             
                             Text("\(Int(topCategory.multiplier))x \(topCategory.name)")
                                 .font(.cgCaption(11))
-                                .foregroundColor(.white.opacity(0.95))
+                                .foregroundColor(isLightCard ? .black.opacity(0.9) : .white.opacity(0.95))
                                 .fontWeight(.medium)
                         }
                         .padding(.horizontal, Spacing.s)
@@ -132,7 +125,7 @@ struct CardView: View {
                         .cornerRadius(Radius.pill)
                         .overlay(
                             RoundedRectangle(cornerRadius: Radius.pill)
-                                .strokeBorder(Color.white.opacity(0.3), lineWidth: 0.5)
+                                .strokeBorder(isLightCard ? Color.black.opacity(0.2) : Color.white.opacity(0.3), lineWidth: 0.5)
                         )
                     }
                 }
@@ -141,16 +134,73 @@ struct CardView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(height: 220)
-        .shadow(color: Color.cgAccent.opacity(0.2), radius: 20, x: 0, y: 10)
-        .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
+        .cornerRadius(Radius.card)
+        .shadow(color: Color.black.opacity(isTopCard ? 0.25 : 0.15), radius: isTopCard ? 30 : 20, x: 0, y: isTopCard ? 15 : 10)
+        .shadow(color: Color.cgAccent.opacity(isTopCard ? 0.15 : 0.1), radius: isTopCard ? 25 : 15, x: 0, y: isTopCard ? 12 : 8)
         .scaleEffect(scale)
         .offset(y: offset)
-        .opacity(isTopCard ? 1.0 : 0.7)
         .onAppear {
-            withAnimation(.linear(duration: 2).repeatForever(autoreverses: false)) {
-                shimmerOffset = 400
-            }
+            checkIfLightCard()
         }
+        .onChange(of: card.imageName) { _ in
+            checkIfLightCard()
+        }
+    }
+}
+
+// MARK: - UIImage Brightness Extension
+extension UIImage {
+    var averageBrightness: Double {
+        guard let cgImage = self.cgImage else { return 0.5 }
+        
+        let context = CIContext()
+        guard let ciImage = CIImage(image: self) else { return 0.5 }
+        
+        // Create a small thumbnail for faster processing
+        let scale = min(100.0 / self.size.width, 100.0 / self.size.height)
+        let thumbnailSize = CGSize(width: self.size.width * scale, height: self.size.height * scale)
+        
+        guard let thumbnail = context.createCGImage(ciImage, from: CGRect(origin: .zero, size: thumbnailSize)) else {
+            return 0.5
+        }
+        
+        let width = thumbnail.width
+        let height = thumbnail.height
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+        
+        var pixelData = [UInt8](repeating: 0, count: width * height * bytesPerPixel)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        guard let context = CGContext(
+            data: &pixelData,
+            width: width,
+            height: height,
+            bitsPerComponent: bitsPerComponent,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
+        ) else {
+            return 0.5
+        }
+        
+        context.draw(thumbnail, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        var totalBrightness: Double = 0
+        let pixelCount = width * height
+        
+        for i in stride(from: 0, to: pixelData.count, by: bytesPerPixel) {
+            let r = Double(pixelData[i])
+            let g = Double(pixelData[i + 1])
+            let b = Double(pixelData[i + 2])
+            
+            // Calculate brightness using luminance formula
+            let brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+            totalBrightness += brightness
+        }
+        
+        return totalBrightness / Double(pixelCount)
     }
 }
 
