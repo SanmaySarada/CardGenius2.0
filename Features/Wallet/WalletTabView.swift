@@ -240,9 +240,6 @@ struct CardStackView: View {
     @Binding var cards: [Card]
     let onCardTap: (Card) -> Void
     
-    @State private var draggedCardId: String?
-    @State private var dragOffset: CGSize = .zero
-    @State private var dragScale: CGFloat = 1.0
     @State private var lastTopCardMovedTime: Date? = nil
     
     private let cardHeight: CGFloat = 220
@@ -253,100 +250,48 @@ struct CardStackView: View {
     var body: some View {
         VStack(spacing: -cardOverlap) {
                 ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
-                    let isDragging = draggedCardId == card.id
-                    let isTopCard = index == 0 && !isDragging
+                    let isTopCard = index == 0
                     
                     CardView(
                         card: card,
                         isTopCard: isTopCard,
-                        offset: isDragging ? 0 : CGFloat(index) * cardSpacing,
-                        scale: isDragging ? dragScale : max(0.88, 1.0 - CGFloat(index) * 0.08)
+                        offset: CGFloat(index) * cardSpacing,
+                        scale: max(0.88, 1.0 - CGFloat(index) * 0.08)
                     )
                     .padding(.horizontal, Spacing.l)
-                    .padding(.top, isDragging ? 0 : CGFloat(index) * cardSpacing)
-                    .zIndex(isDragging ? 10000 : Double(cards.count - index))
-                    .offset(y: isDragging ? dragOffset.height : 0)
-                    .gesture(
-                        DragGesture(minimumDistance: 10)
-                            .onChanged { value in
-                                if draggedCardId == nil {
-                                    withAnimation(.interactiveSpring(response: 0.35, dampingFraction: 0.75)) {
-                                        draggedCardId = card.id
-                                        dragScale = 1.08
-                                    }
-                                }
-                                
-                                if draggedCardId == card.id {
-                                    withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.9)) {
-                                        dragOffset = value.translation
-                                    }
-                                }
-                            }
-                            .onEnded { value in
-                                if let draggedId = draggedCardId, draggedId == card.id {
-                                    let dragThreshold: CGFloat = -80
-                                    
-                                    if value.translation.height < dragThreshold {
-                                        // Move card to top with smooth animation
-                                        withAnimation(.spring(response: 0.6, dampingFraction: 0.78)) {
-                                            if let index = cards.firstIndex(where: { $0.id == draggedId }),
-                                               index > 0 {
-                                                let card = cards.remove(at: index)
-                                                cards.insert(card, at: 0)
-                                                // Record the time when card moved to top
-                                                lastTopCardMovedTime = Date()
-                                            }
-                                        }
-                                    }
-                                    
-                                    // Reset drag state with smooth animation
-                                    withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
-                                        dragOffset = .zero
-                                        dragScale = 1.0
-                                    }
-                                    
-                                    // Clear dragged card after animation completes
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        draggedCardId = nil
-                                    }
-                                }
-                            }
-                    )
+                    .padding(.top, CGFloat(index) * cardSpacing)
+                    .zIndex(Double(cards.count - index))
                     .onTapGesture {
-                        if draggedCardId == nil {
-                            // Check if this card is already at the top
-                            if index == 0 {
-                                // Card is at the top - check cooldown before opening
-                                let now = Date()
-                                if let lastMoved = lastTopCardMovedTime {
-                                    let timeSinceMove = now.timeIntervalSince(lastMoved)
-                                    if timeSinceMove >= tapCooldown {
-                                        // Cooldown has passed - open card detail
-                                        onCardTap(card)
-                                    }
-                                } else {
-                                    // No recent move - open card detail
+                        // Check if this card is already at the top
+                        if index == 0 {
+                            // Card is at the top - check cooldown before opening
+                            let now = Date()
+                            if let lastMoved = lastTopCardMovedTime {
+                                let timeSinceMove = now.timeIntervalSince(lastMoved)
+                                if timeSinceMove >= tapCooldown {
+                                    // Cooldown has passed - open card detail
                                     onCardTap(card)
                                 }
                             } else {
-                                // Card is not at top - move it to top
-                                withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
-                                    if let tappedIndex = cards.firstIndex(where: { $0.id == card.id }) {
-                                        let tappedCard = cards.remove(at: tappedIndex)
-                                        cards.insert(tappedCard, at: 0)
-                                        // Record the time when card moved to top
-                                        lastTopCardMovedTime = Date()
-                                    }
+                                // No recent move - open card detail
+                                onCardTap(card)
+                            }
+                        } else {
+                            // Card is not at top - move it to top
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
+                                if let tappedIndex = cards.firstIndex(where: { $0.id == card.id }) {
+                                    let tappedCard = cards.remove(at: tappedIndex)
+                                    cards.insert(tappedCard, at: 0)
+                                    // Record the time when card moved to top
+                                    lastTopCardMovedTime = Date()
                                 }
                             }
                         }
                     }
                     .onLongPressGesture(minimumDuration: 0.5) {
                         // Long press opens card detail view
-                        if draggedCardId == nil {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                onCardTap(card)
-                            }
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            onCardTap(card)
                         }
                     }
                 }
