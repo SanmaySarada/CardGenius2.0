@@ -18,13 +18,15 @@ struct MainTabView: View {
             Group {
                 switch selectedTab {
                 case 0:
-                    WalletTabView()
+                    DashboardTabView()
                 case 1:
-                    RewardsTabView()
+                    WalletTabView()
                 case 2:
+                    RewardsTabView()
+                case 3:
                     InsightsTabView()
                 default:
-                    WalletTabView()
+                    DashboardTabView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -46,9 +48,10 @@ struct LiquidGlassTabBar: View {
     @Binding var selectedTab: Int
     
     private let tabs: [(icon: String, label: String, tag: Int)] = [
-        ("creditcard", "Wallet", 0),
-        ("star.circle.fill", "Rewards", 1),
-        ("lightbulb.fill", "Insights", 2)
+        ("chart.line.uptrend.xyaxis", "Dashboard", 0),
+        ("creditcard", "Wallet", 1),
+        ("star.circle.fill", "Rewards", 2),
+        ("lightbulb.fill", "Insights", 3)
     ]
     
     var body: some View {

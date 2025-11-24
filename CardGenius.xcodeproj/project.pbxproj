@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A00001 /* CardGeniusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00001 /* CardGeniusApp.swift */; };
-		A0RSRC1 /* card_rewards_matrix_temp2.csv in Resources */ = {isa = PBXBuildFile; fileRef = B0RSRC1 /* card_rewards_matrix_temp2.csv */; };
 		A0RSRC2 /* card_images in Resources */ = {isa = PBXBuildFile; fileRef = B0RSRC2 /* card_images */; };
 		A00002 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00002 /* BottomSheet.swift */; };
 		A00003 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00003 /* ButtonStyles.swift */; };
@@ -48,6 +47,7 @@
 		A00039 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00039 /* WalletTabView.swift */; };
 		A00040 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00040 /* WalletViewModel.swift */; };
 		A00041 /* MerchantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00041 /* MerchantService.swift */; };
+		A00042 /* DashboardTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00042 /* DashboardTabView.swift */; };
 		B05DC718A6F94D6994B9603A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C227D8CA92164BA99896D3BA /* LocationManager.swift */; };
 		88C05C97186248CB9551CDC1 /* CSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D30D9A91C45D8B4D0D04F /* CSVParser.swift */; };
 		996A3BAEEDEA492DAC25E489 /* CategoryMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E9F0BB3A3447E89F176F0 /* CategoryMapper.swift */; };
@@ -57,7 +57,6 @@
 
 /* Begin PBXFileReference section */
 		B00001 /* CardGeniusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGeniusApp.swift; sourceTree = "<group>"; };
-		B0RSRC1 /* card_rewards_matrix_temp2.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = card_rewards_matrix_temp2.csv; sourceTree = "<group>"; };
 		B0RSRC2 /* card_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = card_images; sourceTree = "<group>"; };
 		B00002 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		B00003 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
@@ -97,6 +96,7 @@
 		B00039 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
 		B00040 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		B00041 /* MerchantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantService.swift; sourceTree = "<group>"; };
+		B00042 /* DashboardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabView.swift; sourceTree = "<group>"; };
 		PRODUCT_REF /* CardGenius.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGenius.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C227D8CA92164BA99896D3BA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		645D30D9A91C45D8B4D0D04F /* CSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVParser.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 		ROOT_GROUP = {
 			isa = PBXGroup;
 			children = (
-				B0RSRC1 /* card_rewards_matrix_temp2.csv */,
 				B0RSRC2 /* card_images */,
 				F65AE1960B184B26BABF731F /* card_rewards_matrix.csv */,
 				B00001 /* CardGeniusApp.swift */,
@@ -232,6 +231,7 @@
 				ONBOARDING_GROUP /* Onboarding */,
 				PLACES_GROUP /* Places */,
 				REWARDS_GROUP /* Rewards */,
+				DASHBOARD_GROUP /* Dashboard */,
 				SETTINGS_GROUP /* Settings */,
 				WALLET_GROUP /* Wallet */,
 			);
@@ -269,6 +269,14 @@
 			children = (
 			);
 			path = Places;
+			sourceTree = "<group>";
+		};
+		DASHBOARD_GROUP /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				B00042 /* DashboardTabView.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		REWARDS_GROUP /* Rewards */ = {
@@ -356,7 +364,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0RSRC1 /* card_rewards_matrix_temp2.csv in Resources */,
 				A0RSRC2 /* card_images in Resources */,
 				A0RSRC3 /* card_rewards_matrix.csv in Resources */,
 			);
@@ -408,6 +415,7 @@
 				A00039 /* WalletTabView.swift in Sources */,
 				A00040 /* WalletViewModel.swift in Sources */,
 				A00041 /* MerchantService.swift in Sources */,
+				A00042 /* DashboardTabView.swift in Sources */,
 				B05DC718A6F94D6994B9603A /* LocationManager.swift in Sources */,
 				88C05C97186248CB9551CDC1 /* CSVParser.swift in Sources */,
 				996A3BAEEDEA492DAC25E489 /* CategoryMapper.swift in Sources */,
