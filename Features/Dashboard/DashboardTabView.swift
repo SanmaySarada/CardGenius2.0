@@ -35,11 +35,9 @@ struct DashboardTabView: View {
                     accountsPanel
                     transactionsPanel
                 }
-                .frame(maxWidth: 760, alignment: .center)
                 .padding(.horizontal, Spacing.l)
                 .padding(.top, Spacing.l)
                 .padding(.bottom, Spacing.xl)
-                .frame(maxWidth: .infinity)
             }
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .navigationTitle("Dashboard")
