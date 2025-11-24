@@ -41,14 +41,18 @@
 		A00030 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00030 /* MainTabView.swift */; };
 		A00031 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00031 /* OnboardingFlowView.swift */; };
 		A00032 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00032 /* OnboardingViewModel.swift */; };
-		A00033 /* PlacesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00033 /* PlacesTabView.swift */; };
-		A00034 /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00034 /* PlacesViewModel.swift */; };
 		A00035 /* RewardsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00035 /* RewardsTabView.swift */; };
 		A00036 /* RewardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00036 /* RewardsViewModel.swift */; };
 		A00037 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00037 /* SettingsView.swift */; };
 		A00038 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00038 /* CardDetailView.swift */; };
 		A00039 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00039 /* WalletTabView.swift */; };
 		A00040 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00040 /* WalletViewModel.swift */; };
+		A00041 /* MerchantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00041 /* MerchantService.swift */; };
+		B05DC718A6F94D6994B9603A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C227D8CA92164BA99896D3BA /* LocationManager.swift */; };
+		88C05C97186248CB9551CDC1 /* CSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D30D9A91C45D8B4D0D04F /* CSVParser.swift */; };
+		996A3BAEEDEA492DAC25E489 /* CategoryMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E9F0BB3A3447E89F176F0 /* CategoryMapper.swift */; };
+		8CE742A0E176442ABBB22B0F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DFC922D9FA4927A57443B9 /* Configuration.swift */; };
+		A0RSRC3 /* card_rewards_matrix.csv in Resources */ = {isa = PBXBuildFile; fileRef = F65AE1960B184B26BABF731F /* card_rewards_matrix.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,15 +90,19 @@
 		B00030 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		B00031 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
 		B00032 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		B00033 /* PlacesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTabView.swift; sourceTree = "<group>"; };
-		B00034 /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
 		B00035 /* RewardsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsTabView.swift; sourceTree = "<group>"; };
 		B00036 /* RewardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewModel.swift; sourceTree = "<group>"; };
 		B00037 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B00038 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 		B00039 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
 		B00040 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
+		B00041 /* MerchantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantService.swift; sourceTree = "<group>"; };
 		PRODUCT_REF /* CardGenius.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGenius.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C227D8CA92164BA99896D3BA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		645D30D9A91C45D8B4D0D04F /* CSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVParser.swift; sourceTree = "<group>"; };
+		E66E9F0BB3A3447E89F176F0 /* CategoryMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMapper.swift; sourceTree = "<group>"; };
+		28DFC922D9FA4927A57443B9 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		F65AE1960B184B26BABF731F /* card_rewards_matrix.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = card_rewards_matrix.csv; path = Core/Resources/card_rewards_matrix.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +121,7 @@
 			children = (
 				B0RSRC1 /* card_rewards_matrix_temp2.csv */,
 				B0RSRC2 /* card_images */,
+				F65AE1960B184B26BABF731F /* card_rewards_matrix.csv */,
 				B00001 /* CardGeniusApp.swift */,
 				CORE_GROUP /* Core */,
 				FEATURES_GROUP /* Features */,
@@ -180,6 +189,12 @@
 			children = (
 				MOCKS_GROUP /* Mocks */,
 				PROTOCOLS_GROUP /* Protocols */,
+
+				C227D8CA92164BA99896D3BA /* LocationManager.swift */,
+				645D30D9A91C45D8B4D0D04F /* CSVParser.swift */,
+				E66E9F0BB3A3447E89F176F0 /* CategoryMapper.swift */,
+				28DFC922D9FA4927A57443B9 /* Configuration.swift */,
+				B00041 /* MerchantService.swift */,
 				B00027 /* ServiceContainer.swift */,
 			);
 			path = Services;
@@ -252,8 +267,6 @@
 		PLACES_GROUP /* Places */ = {
 			isa = PBXGroup;
 			children = (
-				B00033 /* PlacesTabView.swift */,
-				B00034 /* PlacesViewModel.swift */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -345,6 +358,7 @@
 			files = (
 				A0RSRC1 /* card_rewards_matrix_temp2.csv in Resources */,
 				A0RSRC2 /* card_images in Resources */,
+				A0RSRC3 /* card_rewards_matrix.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,14 +401,17 @@
 				A00030 /* MainTabView.swift in Sources */,
 				A00031 /* OnboardingFlowView.swift in Sources */,
 				A00032 /* OnboardingViewModel.swift in Sources */,
-				A00033 /* PlacesTabView.swift in Sources */,
-				A00034 /* PlacesViewModel.swift in Sources */,
 				A00035 /* RewardsTabView.swift in Sources */,
 				A00036 /* RewardsViewModel.swift in Sources */,
 				A00037 /* SettingsView.swift in Sources */,
 				A00038 /* CardDetailView.swift in Sources */,
 				A00039 /* WalletTabView.swift in Sources */,
 				A00040 /* WalletViewModel.swift in Sources */,
+				A00041 /* MerchantService.swift in Sources */,
+				B05DC718A6F94D6994B9603A /* LocationManager.swift in Sources */,
+				88C05C97186248CB9551CDC1 /* CSVParser.swift in Sources */,
+				996A3BAEEDEA492DAC25E489 /* CategoryMapper.swift in Sources */,
+				8CE742A0E176442ABBB22B0F /* Configuration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +551,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to recommend the best credit card for nearby merchants";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to recommend the best credit card for nearby merchants";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,6 +581,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to recommend the best credit card for nearby merchants";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to recommend the best credit card for nearby merchants";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

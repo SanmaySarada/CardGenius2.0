@@ -149,6 +149,7 @@ enum MockData {
         id: "merchant-1",
         name: "Starbucks",
         category: .dining,
+        rawTypes: ["cafe", "food"],
         address: "123 Campus Blvd, San Francisco, CA",
         location: Merchant.Location(latitude: 37.7749, longitude: -122.4194),
         iconName: "cup.and.saucer.fill"
@@ -159,6 +160,7 @@ enum MockData {
             id: "merchant-1",
             name: "Starbucks",
             category: .dining,
+            rawTypes: ["cafe", "food"],
             address: "123 Campus Blvd",
             location: Merchant.Location(latitude: 37.7749, longitude: -122.4194),
             iconName: "cup.and.saucer.fill"
@@ -167,6 +169,7 @@ enum MockData {
             id: "merchant-2",
             name: "Target",
             category: .shopping,
+            rawTypes: ["department_store", "store"],
             address: "456 Market St",
             location: Merchant.Location(latitude: 37.7849, longitude: -122.4094),
             iconName: "cart.fill"
@@ -175,6 +178,7 @@ enum MockData {
             id: "merchant-3",
             name: "Chevron",
             category: .gas,
+            rawTypes: ["gas_station"],
             address: "789 Main St",
             location: Merchant.Location(latitude: 37.7649, longitude: -122.4294),
             iconName: "fuelpump.fill"
@@ -183,6 +187,7 @@ enum MockData {
             id: "merchant-4",
             name: "Trader Joe's",
             category: .groceries,
+            rawTypes: ["grocery_or_supermarket", "supermarket"],
             address: "321 Oak Ave",
             location: Merchant.Location(latitude: 37.7549, longitude: -122.4394),
             iconName: "cart.fill"

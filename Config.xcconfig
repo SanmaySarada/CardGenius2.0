@@ -1,0 +1,8 @@
+//
+//  Config.xcconfig
+//  CardGenius
+//
+//  Configuration Settings
+//
+
+GOOGLE_PLACES_API_KEY = YOUR_API_KEY_HERE

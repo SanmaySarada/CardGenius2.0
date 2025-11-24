@@ -12,6 +12,7 @@ struct Merchant: Identifiable, Codable {
     let id: String
     let name: String
     let category: MerchantCategory
+    let rawTypes: [String]? // Raw Google Places types
     let address: String
     let location: Location
     let iconName: String?

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import CoreLocation
 
 struct WalletTabView: View {
     @EnvironmentObject var serviceContainer: ServiceContainer
@@ -16,13 +17,27 @@ struct WalletTabView: View {
     @State private var showingAddCard: Bool = false
     @State private var showingSettings: Bool = false
     
+    // Location change tracking for banner refresh
+    @State private var lastKnownLocation: CLLocation?
+    @State private var lastRefreshTime: Date?
+    private let locationRefreshCooldown: TimeInterval = 3.0 // 3 seconds cooldown between refreshes
+    private let minimumLocationChangeDistance: CLLocationDistance = 50.0 // 50 meters minimum change
+    
     init() {
-        // Temporary initialization, will be updated in onAppear
+        // WARNING: Temporary initialization - services will be replaced in onAppear
+        // This temporary MerchantService uses a NEW LocationManager that won't have location
+        // The real services from ServiceContainer will be injected in onAppear
+        // DO NOT load suggestions until after onAppear updates the services
         _viewModel = StateObject(wrappedValue: WalletViewModel(
-            cardService: MockCardService(),
-            merchantService: MockMerchantService(),
+            cardService: MockCardService(), // Keep for now as cards are local
+            merchantService: MerchantService(locationManager: LocationManager(), cardService: MockCardService()),
             recommendationService: MockRecommendationService()
         ))
+    }
+    
+    // Computed property to access location manager
+    private var locationManager: LocationManager {
+        serviceContainer.locationManager
     }
     
     var body: some View {
@@ -122,14 +137,151 @@ struct WalletTabView: View {
                 SettingsView()
             }
             .onAppear {
-                // Initialize view model with services from environment
+                // CRITICAL: Initialize view model with services from environment FIRST
+                // This ensures we use the real LocationManager from ServiceContainer, not a temporary one
+                print("[WalletTabView] ===== ON APPEAR - CHECKING LOCATION =====")
                 viewModel.cardService = serviceContainer.cardService
                 viewModel.merchantService = serviceContainer.merchantService
                 viewModel.recommendationService = serviceContainer.recommendationService
+                
+                // Debug location status
+                serviceContainer.locationManager.checkLocationStatus()
+                
+                // Log location status
+                if let location = serviceContainer.locationManager.userLocation {
+                    print("[WalletTabView] ServiceContainer has location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+                    // If we already have location, set it as lastKnownLocation and load suggestion
+                    lastKnownLocation = location
+                    Task { @MainActor in
+                        await viewModel.loadCurrentSuggestion()
+                    }
+                } else {
+                    print("[WalletTabView] WARNING: ServiceContainer locationManager has NO location yet")
+                    let status = serviceContainer.locationManager.authorizationStatus
+                    print("[WalletTabView] Authorization status: \(status.rawValue)")
+                    
+                    if status == .denied {
+                        print("[WalletTabView] ERROR: Location permission DENIED - user must enable in Settings")
+                    } else if status == .notDetermined {
+                        print("[WalletTabView] Location permission not determined - should prompt user")
+                    }
+                }
+                print("[WalletTabView] ===== END ON APPEAR =====")
             }
             .task {
+                // Wait for services to be properly injected from onAppear
+                try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds to ensure services are injected
+                
+                // Verify we're using the real merchant service
+                if let realService = viewModel.merchantService as? MerchantService {
+                    print("[WalletTabView] Using real MerchantService with actual location")
+                } else {
+                    print("[WalletTabView] ERROR: Still using temporary/mock MerchantService!")
+                }
+                
                 await viewModel.loadCards()
+                
+                // Try to load suggestion - if location isn't available, onChange will handle it when location arrives
+                // loadCurrentSuggestion already has retry logic built in
+                print("[WalletTabView] Initial attempt to load suggestion...")
                 await viewModel.loadCurrentSuggestion()
+                
+                // FALLBACK: If initial load failed, periodically check for location
+                // This handles cases where onChange might not fire properly
+                if viewModel.currentSuggestion == nil {
+                    print("[WalletTabView] Initial load failed - setting up periodic check for location")
+                    
+                    // Check every 1 second for up to 10 seconds
+                    for i in 1...10 {
+                        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                        
+                        if let location = serviceContainer.locationManager.userLocation {
+                            print("[WalletTabView] Location became available after \(i) seconds - loading suggestion")
+                            lastKnownLocation = location
+                            await viewModel.loadCurrentSuggestion()
+                            
+                            // If successful, break out of loop
+                            if viewModel.currentSuggestion != nil {
+                                print("[WalletTabView] Successfully loaded suggestion via periodic check")
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+            .onChange(of: serviceContainer.locationManager.authorizationStatus) { newStatus in
+                // When permission is granted, trigger location refresh
+                print("[WalletTabView] ===== AUTHORIZATION STATUS CHANGED IN VIEW =====")
+                print("[WalletTabView] New authorization status: \(newStatus.rawValue)")
+                
+                if newStatus == .authorizedWhenInUse || newStatus == .authorizedAlways {
+                    print("[WalletTabView] Permission granted - checking if location is available")
+                    
+                    // Small delay to let location update
+                    Task { @MainActor in
+                        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+                        
+                        // If we have location, load immediately
+                        if let location = serviceContainer.locationManager.userLocation {
+                            print("[WalletTabView] Permission granted and location available - loading suggestion")
+                            lastKnownLocation = location
+                            await viewModel.loadCurrentSuggestion()
+                        } else {
+                            print("[WalletTabView] Permission granted but no location yet - will load when location arrives")
+                        }
+                    }
+                }
+            }
+            .onChange(of: serviceContainer.locationManager.userLocation) { newLocation in
+                // STRICT: Only refresh banner when actual location changes significantly
+                print("[WalletTabView] ===== LOCATION CHANGED IN VIEW =====")
+                print("[WalletTabView] New location: \(newLocation?.coordinate.latitude ?? 0), \(newLocation?.coordinate.longitude ?? 0)")
+                
+                guard let newLocation = newLocation else {
+                    // Location became unavailable - clear suggestion
+                    print("[WalletTabView] Location became unavailable - clearing suggestion")
+                    Task { @MainActor in
+                        viewModel.currentSuggestion = nil
+                    }
+                    lastKnownLocation = nil
+                    return
+                }
+                
+                // Check if location changed significantly
+                if let lastLocation = lastKnownLocation {
+                    let distance = newLocation.distance(from: lastLocation)
+                    
+                    // Only refresh if moved more than minimum distance
+                    if distance < minimumLocationChangeDistance {
+                        print("[WalletTabView] Location change too small (\(Int(distance))m) - skipping refresh")
+                        return
+                    }
+                    
+                    // Check cooldown period
+                    if let lastRefresh = lastRefreshTime {
+                        let timeSinceRefresh = Date().timeIntervalSince(lastRefresh)
+                        if timeSinceRefresh < locationRefreshCooldown {
+                            print("[WalletTabView] Location refresh cooldown active (\(Int(timeSinceRefresh))s) - skipping refresh")
+                            return
+                        }
+                    }
+                    
+                    print("[WalletTabView] Location changed significantly (\(Int(distance))m) - refreshing suggestion")
+                } else {
+                    // FIRST location update - ALWAYS load suggestion
+                    print("[WalletTabView] ===== FIRST LOCATION RECEIVED - LOADING BANNER =====")
+                    print("[WalletTabView] Location: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
+                }
+                
+                // Update tracking state
+                lastKnownLocation = newLocation
+                lastRefreshTime = Date()
+                
+                // Refresh suggestion based on new actual location
+                print("[WalletTabView] Triggering loadCurrentSuggestion()...")
+                Task { @MainActor in
+                    await viewModel.loadCurrentSuggestion()
+                }
             }
         }
     }
@@ -256,10 +408,10 @@ struct CardStackView: View {
                         card: card,
                         isTopCard: isTopCard,
                         offset: CGFloat(index) * cardSpacing,
-                        scale: max(0.88, 1.0 - CGFloat(index) * 0.08)
+                        scale: 1.0
                     )
                     .padding(.horizontal, Spacing.l)
-                    .padding(.top, CGFloat(index) * cardSpacing)
+                    .padding(.top, index == 0 ? 0 : cardSpacing)
                     .zIndex(Double(cards.count - index))
                     .onTapGesture {
                         // Check if this card is already at the top
