@@ -29,12 +29,44 @@ struct CardView: View {
         }
     }
     
+    // Resize image to consistent size (408x304) for uniform display
+    private func resizeImage(_ image: UIImage, to targetSize: CGSize = CGSize(width: 408, height: 304)) -> UIImage {
+        let size = image.size
+        
+        // Calculate scaling factor to fill target size (crop if needed)
+        let scaleW = targetSize.width / size.width
+        let scaleH = targetSize.height / size.height
+        let scale = max(scaleW, scaleH) // Use larger scale to ensure we fill the frame
+        
+        // Calculate new dimensions
+        let newWidth = size.width * scale
+        let newHeight = size.height * scale
+        
+        // Create graphics context
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
+        
+        // Calculate position to center the scaled image
+        let x = (targetSize.width - newWidth) / 2
+        let y = (targetSize.height - newHeight) / 2
+        
+        // Draw scaled image
+        image.draw(in: CGRect(x: x, y: y, width: newWidth, height: newHeight))
+        
+        // Get the resized image
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext() ?? image
+        UIGraphicsEndImageContext()
+        
+        return resizedImage
+    }
+    
     var body: some View {
         ZStack {
             // Base Card Background: Real card image or gradient fallback
             if let imageName = card.imageName, !imageName.isEmpty,
-               let uiImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
-                Image(uiImage: uiImage)
+               let originalImage = UIImage(named: "card_images/\(imageName)") ?? UIImage(named: imageName) {
+                // Resize image to consistent 480x304 before displaying
+                let resizedImage = resizeImage(originalImage)
+                Image(uiImage: resizedImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxWidth: .infinity)
