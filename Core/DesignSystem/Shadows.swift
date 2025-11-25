@@ -67,44 +67,46 @@ extension View {
     }
     
     func liquidGlassCard(cornerRadius: CGFloat = 24) -> some View {
-        self.background(
-            ZStack {
-                // Base glass layer
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(.ultraThinMaterial)
-                
-                // Animated gradient shimmer
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color.cgAccentGradientStart.opacity(0.15),
-                                Color.cgAccentGradientEnd.opacity(0.15),
-                                Color.cgGradientStart.opacity(0.1)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+        self
+            .background(
+                ZStack {
+                    // Base glass layer
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(.ultraThinMaterial)
+                    
+                    // Animated gradient shimmer
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.cgAccentGradientStart.opacity(0.15),
+                                    Color.cgAccentGradientEnd.opacity(0.15),
+                                    Color.cgGradientStart.opacity(0.1)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                    )
-                
-                // Glass border with glow
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [
-                                Color.white.opacity(0.6),
-                                Color.white.opacity(0.2),
-                                Color.white.opacity(0.1)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1.5
-                    )
-            }
-        )
-        .shadow(color: Color.cgAccent.opacity(0.15), radius: 20, x: 0, y: 10)
-        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+                    
+                    // Glass border with glow
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .strokeBorder(
+                            LinearGradient(
+                                colors: [
+                                    Color.white.opacity(0.6),
+                                    Color.white.opacity(0.2),
+                                    Color.white.opacity(0.1)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1.5
+                        )
+                }
+            )
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .shadow(color: Color.cgAccent.opacity(0.15), radius: 20, x: 0, y: 10)
+            .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
     }
     
     func glowEffect(color: Color = .cgAccent, radius: CGFloat = 20) -> some View {

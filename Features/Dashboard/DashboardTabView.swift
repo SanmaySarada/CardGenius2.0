@@ -29,13 +29,19 @@ struct DashboardTabView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: Spacing.l) {
+                VStack(spacing: Spacing.l) {
                     locationBanner
+                        .padding(.horizontal, Spacing.l)
+                    
                     heroCard
+                        .padding(.horizontal, Spacing.l)
+                    
                     accountsPanel
+                        .padding(.horizontal, Spacing.l)
+                    
                     transactionsPanel
+                        .padding(.horizontal, Spacing.l)
                 }
-                .padding(.horizontal, Spacing.l)
                 .padding(.top, Spacing.l)
                 .padding(.bottom, Spacing.xl)
             }
@@ -145,18 +151,16 @@ struct DashboardTabView: View {
         DashboardCard {
             VStack(alignment: .leading, spacing: Spacing.m) {
                 HStack {
-            Text("Recent transactions")
-                .font(.cgHeadline(20, weight: .bold))
+                    Text("Recent transactions")
+                        .font(.cgHeadline(20, weight: .bold))
                     Spacer()
                     Text("See all")
                         .font(.cgCaption(12))
                         .foregroundColor(.cgAccent)
                 }
                 
-                HeaderRow()
-                
                 VStack(spacing: Spacing.s) {
-                    ForEach(0..<6, id: \.self) { _ in
+                    ForEach(0..<5, id: \.self) { _ in
                         TransactionPlaceholderRow()
                     }
                 }
@@ -259,12 +263,10 @@ private struct DashboardCard<Content: View>: View {
     }
     
     var body: some View {
-        VStack {
-            content
-                .padding(Spacing.l)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .liquidGlassCard(cornerRadius: Radius.card)
+        content
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Spacing.l)
+            .liquidGlassCard(cornerRadius: Radius.card)
     }
 }
 
@@ -371,19 +373,15 @@ private struct HeaderRow: View {
 
 private struct TransactionPlaceholderRow: View {
     var body: some View {
-        HStack(spacing: Spacing.m) {
-            SkeletonBar(width: 40, height: 14, cornerRadius: 6)
-                .frame(width: 60, alignment: .leading)
-            
-            VStack(alignment: .leading, spacing: 6) {
-                SkeletonBar(width: 160, height: 16, cornerRadius: 8)
-                SkeletonBar(width: 100, height: 12, cornerRadius: 6)
+        HStack(spacing: Spacing.s) {
+            VStack(alignment: .leading, spacing: 4) {
+                SkeletonBar(width: 120, height: 14, cornerRadius: 6)
+                SkeletonBar(width: 80, height: 10, cornerRadius: 4)
             }
             
             Spacer()
             
-            SkeletonBar(width: 70, height: 16, cornerRadius: 8)
-                .frame(width: 80, alignment: .trailing)
+            SkeletonBar(width: 60, height: 14, cornerRadius: 6)
         }
         .padding(.vertical, Spacing.xs)
     }
@@ -395,67 +393,71 @@ private struct DashboardLocationBanner: View {
     @State private var animateIcon = false
     
     var body: some View {
-        HStack(spacing: Spacing.m) {
-            ZStack {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .frame(width: 48, height: 48)
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color.cgAccentGradientStart.opacity(0.4),
-                                Color.cgAccentGradientEnd.opacity(0.3)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+        Button(action: {}) {
+            HStack(spacing: Spacing.m) {
+                ZStack {
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .frame(width: 48, height: 48)
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.cgAccentGradientStart.opacity(0.4),
+                                    Color.cgAccentGradientEnd.opacity(0.3)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                    )
-                    .frame(width: 48, height: 48)
+                        .frame(width: 48, height: 48)
+                    
+                    Image(systemName: suggestion.iconSystemName)
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.yellow, .orange, .pink],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .rotationEffect(.degrees(animateIcon ? 360 : 0))
+                }
+                .shadow(color: Color.yellow.opacity(0.4), radius: 10, x: 0, y: 4)
                 
-                Image(systemName: suggestion.iconSystemName)
-                    .font(.system(size: 20, weight: .semibold))
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    if isLoading {
+                        SkeletonBar(width: 200, height: 16, cornerRadius: 8)
+                        SkeletonBar(width: 160, height: 12, cornerRadius: 6)
+                    } else {
+                        Text("You're at \(suggestion.merchantName)")
+                            .font(.cgSubheadline(15))
+                            .fontWeight(.semibold)
+                            .foregroundColor(.cgPrimaryText)
+                        Text("Use \(suggestion.cardName) for \(suggestion.rewardText)")
+                            .font(.cgCaption(12))
+                            .foregroundColor(.cgSecondaryText)
+                    }
+                }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .fontWeight(.semibold)
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [.yellow, .orange, .pink],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                            colors: [Color.cgAccentGradientStart, Color.cgAccentGradientEnd],
+                            startPoint: .leading,
+                            endPoint: .trailing
                         )
                     )
-                    .rotationEffect(.degrees(animateIcon ? 360 : 0))
             }
-            .shadow(color: Color.yellow.opacity(0.4), radius: 10, x: 0, y: 4)
-            
-            VStack(alignment: .leading, spacing: Spacing.xs) {
-                if isLoading {
-                    SkeletonBar(width: 200, height: 16, cornerRadius: 8)
-                    SkeletonBar(width: 160, height: 12, cornerRadius: 6)
-                } else {
-                    Text("You're at \(suggestion.merchantName)")
-                        .font(.cgSubheadline(15))
-                        .fontWeight(.semibold)
-                        .foregroundColor(.cgPrimaryText)
-                    Text("Use \(suggestion.cardName) for \(suggestion.rewardText)")
-                        .font(.cgCaption(12))
-                        .foregroundColor(.cgSecondaryText)
-                }
-            }
-            
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [Color.cgAccentGradientStart, Color.cgAccentGradientEnd],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Spacing.m)
+            .liquidGlassCard(cornerRadius: Radius.card)
         }
-        .padding(Spacing.m)
-        .liquidGlassCard(cornerRadius: Radius.card)
+        .buttonStyle(.plain)
         .onAppear {
             withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
                 animateIcon = true

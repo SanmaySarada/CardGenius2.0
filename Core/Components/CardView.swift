@@ -97,13 +97,6 @@ struct CardView: View {
             
             // Card Content - always displayed on top
             VStack(alignment: .leading, spacing: Spacing.m) {
-                HStack {
-                    Spacer()
-                    
-                    // Enhanced Status Pill
-                    StatusPill(status: card.status)
-                }
-                
                 Spacer()
                 
                 // Card Number with enhanced styling
@@ -125,42 +118,12 @@ struct CardView: View {
                     .tracking(6)
                     .shadow(color: isLightCard ? .white.opacity(0.3) : .black.opacity(0.3), radius: 4, x: 0, y: 2)
                 
-                // Card Name with glass background
-                VStack(alignment: .leading, spacing: Spacing.xs) {
-                    Text(card.displayName)
-                        .font(.cgHeadline(18))
-                        .foregroundColor(isLightCard ? .black : .white)
-                        .fontWeight(.semibold)
-                        .shadow(color: isLightCard ? .white.opacity(0.3) : .black.opacity(0.2), radius: 2)
-                    
-                    if let topCategory = card.rewardCategories.first {
-                        HStack(spacing: Spacing.s) {
-                            Image(systemName: "star.fill")
-                                .font(.caption)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [.yellow, .orange],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: .yellow.opacity(0.6), radius: 4)
-                            
-                            Text("\(Int(topCategory.multiplier))x \(topCategory.name)")
-                                .font(.cgCaption(11))
-                                .foregroundColor(isLightCard ? .black.opacity(0.9) : .white.opacity(0.95))
-                                .fontWeight(.medium)
-                        }
-                        .padding(.horizontal, Spacing.s)
-                        .padding(.vertical, 6)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(Radius.pill)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: Radius.pill)
-                                .strokeBorder(isLightCard ? Color.black.opacity(0.2) : Color.white.opacity(0.3), lineWidth: 0.5)
-                        )
-                    }
-                }
+                // Card Name
+                Text(card.displayName)
+                    .font(.cgHeadline(18))
+                    .foregroundColor(isLightCard ? .black : .white)
+                    .fontWeight(.semibold)
+                    .shadow(color: isLightCard ? .white.opacity(0.3) : .black.opacity(0.2), radius: 2)
             }
             .padding(Spacing.l)
             .frame(maxWidth: .infinity, alignment: .leading)

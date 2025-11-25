@@ -20,11 +20,11 @@ struct MainTabView: View {
                 case 0:
                     WalletTabView()
                 case 1:
-                    RewardsTabView()
-                case 2:
-                    InsightsTabView()
-                case 3:
                     DashboardTabView()
+                case 2:
+                    RewardsTabView()
+                case 3:
+                    InsightsTabView()
                 default:
                     WalletTabView()
                 }
@@ -49,9 +49,9 @@ struct LiquidGlassTabBar: View {
     
     private let tabs: [(icon: String, label: String, tag: Int)] = [
         ("creditcard", "Wallet", 0),
-        ("star.circle.fill", "Rewards", 1),
-        ("lightbulb.fill", "Insights", 2),
-        ("chart.line.uptrend.xyaxis", "Dashboard", 3)
+        ("chart.line.uptrend.xyaxis", "Dashboard", 1),
+        ("star.circle.fill", "Rewards", 2),
+        ("lightbulb.fill", "Insights", 3)
     ]
     
     var body: some View {

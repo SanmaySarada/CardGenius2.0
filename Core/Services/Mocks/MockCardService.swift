@@ -85,7 +85,7 @@ extension MockCardService {
             let status: CardStatus = .active
             let categories = [RewardCategory(id: "cat-\(idx)", name: "General", multiplier: 1.0, description: nil)]
             let imageName = Self.matchImageName(for: name, in: imageNames)
-            if idx <= 10 { // Log first 10 for debugging
+            if idx <= 5 { // Log first 5 for debugging
                 print("🃏 Card: '\(name)' → Image: '\(imageName ?? "NONE")'")
             }
             let creditLimit = Double.random(in: 5000...50000)
