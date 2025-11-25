@@ -51,7 +51,7 @@ class MockCardService: CardServiceProtocol {
 // MARK: - CSV -> Cards generation
 extension MockCardService {
     private static func generateCardsFromCSV() -> [Card]? {
-        guard let csvURL = Bundle.main.url(forResource: "card_rewards_matrix_temp2", withExtension: "csv") else {
+        guard let csvURL = Bundle.main.url(forResource: "card_rewards_matrix", withExtension: "csv") else {
             return nil
         }
         guard let imagesFolderURL = Bundle.main.url(forResource: "card_images", withExtension: nil) else {
@@ -71,6 +71,13 @@ extension MockCardService {
             if idx == 0 { continue } // header
             // naive CSV split (card name has no commas typically; acceptable for mock)
             let name = line.split(separator: ",", maxSplits: 1, omittingEmptySubsequences: false).first.map(String.init) ?? "Card \(idx)"
+            
+            // Skip invalid/junk rows
+            let trimmedName = name.trimmingCharacters(in: .whitespaces)
+            if trimmedName.isEmpty || trimmedName == "App" || trimmedName == "Resources" {
+                continue
+            }
+            
             let issuer = name
             let last4 = String(format: "%04d", Int.random(in: 0...9999))
             let network: CardNetwork = Self.inferNetwork(from: name)
@@ -140,16 +147,16 @@ extension MockCardService {
     
     private static func matchImageName(for cardName: String, in imageNames: [String]) -> String? {
         let target = normalize(cardName)
-        // simple contains/fuzzy match
-        let scored = imageNames.map { imageName -> (String, Int) in
+        
+        // Exact match after normalizing (removes special chars like ®℠™ and lowercases)
+        for imageName in imageNames {
             let base = normalize((imageName as NSString).deletingPathExtension)
-            let score = base.commonPrefix(with: target).count
-            return (imageName, score)
+            if base == target {
+                return imageName
+            }
         }
-        let best = scored.max { a, b in a.1 < b.1 }
-        if let best = best, best.1 >= 4 {
-            return best.0 // usable with Image(best)
-        }
+        
+        // No match found
         return nil
     }
     

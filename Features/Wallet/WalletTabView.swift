@@ -90,15 +90,21 @@ struct WalletTabView: View {
                                 .padding(.top, Spacing.m)
                             }
                             
+                            // Dollars Saved Card
+                            DollarsSavedCard(
+                                savedAmount: viewModel.savedAmount,
+                                isLoading: viewModel.isLoadingSavedAmount
+                            )
+                            .padding(.horizontal, Spacing.l)
+                            
                             // Card Stack (z-index handled internally)
                             CardStackView(
                                 cards: $viewModel.cards,
                                 onCardTap: { card in
                                     selectedCard = card
-                                    showingCardDetail = true
+                                        showingCardDetail = true
                                 }
                             )
-                            .padding(.vertical, Spacing.l)
                         }
                     }
                     .zIndex(1)
@@ -180,6 +186,7 @@ struct WalletTabView: View {
                 }
                 
                 await viewModel.loadCards()
+                await viewModel.loadSavedAmount()
                 
                 // Try to load suggestion - if location isn't available, onChange will handle it when location arrives
                 // loadCurrentSuggestion already has retry logic built in
@@ -448,8 +455,78 @@ struct CardStackView: View {
                     }
                 }
             }
-            .padding(.top, Spacing.xl)
             .padding(.bottom, Spacing.xxl + cardHeight) // Extra padding to see bottom of last card
+    }
+}
+
+struct DollarsSavedCard: View {
+    let savedAmount: Double?
+    let isLoading: Bool
+    @State private var animateGradient = false
+    
+    private func formatCurrency(_ amount: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        formatter.maximumFractionDigits = 0
+        return formatter.string(from: NSNumber(value: amount)) ?? "$0"
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.m) {
+            Text("You've saved")
+                .font(.cgSubheadline(15))
+                .foregroundColor(.cgSecondaryText)
+            
+            HStack(alignment: .firstTextBaseline, spacing: Spacing.s) {
+                if let amount = savedAmount, !isLoading {
+                    Text(formatCurrency(amount))
+                        .font(.cgTitle(48))
+                        .fontWeight(.bold)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [
+                                    Color.green,
+                                    Color.green.opacity(0.8)
+                                ],
+                                startPoint: animateGradient ? .topLeading : .bottomTrailing,
+                                endPoint: animateGradient ? .bottomTrailing : .topLeading
+                            )
+                        )
+                        .shadow(color: Color.green.opacity(0.3), radius: 8, x: 0, y: 4)
+                        .glowEffect(color: .green, radius: 12)
+                } else {
+                    Text("$XX")
+                        .font(.cgTitle(48))
+                        .fontWeight(.bold)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [
+                                    Color.green.opacity(0.6),
+                                    Color.green.opacity(0.4)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .shadow(color: Color.green.opacity(0.2), radius: 8, x: 0, y: 4)
+                }
+            }
+            
+            Text("by optimizing your credit card usage")
+                .font(.cgCaption(12))
+                .foregroundColor(.cgSecondaryText)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(Spacing.xl)
+        .liquidGlassCard(cornerRadius: Radius.xlarge)
+        .onAppear {
+            if savedAmount != nil {
+                withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
+                    animateGradient.toggle()
+                }
+            }
+        }
     }
 }
 

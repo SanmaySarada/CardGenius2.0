@@ -13,7 +13,7 @@ class CSVParser {
     private init() {}
     
     func parseRewardsMatrix() -> [String: [String: Double]] {
-        guard let path = Bundle.main.path(forResource: "card_rewards_matrix_temp2", ofType: "csv") else {
+        guard let path = Bundle.main.path(forResource: "card_rewards_matrix", ofType: "csv") else {
             print("CSV file not found")
             return [:]
         }

@@ -20,6 +20,8 @@ class WalletViewModel: ObservableObject {
     @Published var cards: [Card] = []
     @Published var isLoading: Bool = false
     @Published var currentSuggestion: CardSuggestion?
+    @Published var savedAmount: Double? = nil
+    @Published var isLoadingSavedAmount: Bool = false
     
     var cardService: CardServiceProtocol
     var merchantService: MerchantServiceProtocol
@@ -133,6 +135,18 @@ class WalletViewModel: ObservableObject {
         
         let card = cards.remove(at: index)
         cards.insert(card, at: 0)
+    }
+    
+    func loadSavedAmount() async {
+        isLoadingSavedAmount = true
+        defer { isLoadingSavedAmount = false }
+        
+        // TODO: Replace with actual API endpoint
+        let endpoint = "/api/wallet/saved-amount"
+        _ = endpoint
+        
+        // For now, set to nil to show placeholder
+        savedAmount = nil
     }
 }
 
